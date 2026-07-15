@@ -1,0 +1,3 @@
+import { LibraryPage } from "@/features/library/library-page";
+import { Suspense } from "react";
+export default function RepurchaseRoute() { return <Suspense fallback={null}><LibraryPage repurchaseOnly /></Suspense>; }
