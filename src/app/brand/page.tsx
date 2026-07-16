@@ -8,6 +8,8 @@ export const metadata: Metadata = {
 };
 
 export default function BrandPage() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
   return <main className={styles.page}>
     <nav className={styles.nav} aria-label="品牌导航">
       <Link className={styles.wordmark} href="/brand/">买过</Link>
@@ -18,7 +20,7 @@ export default function BrandPage() {
       <p className={styles.kicker}>PRIVATE PURCHASE ARCHIVE</p>
       <h1>买过的，<br />都值得被记住。</h1>
       <p className={styles.intro}>把吃过、用过、喜欢过和不想再买的，都留下一句真实感受。下一次购买，不必重新猜。</p>
-      <a className={styles.download} href="/downloads/bought-android-debug.apk" download>
+      <a className={styles.download} href={`${basePath}/downloads/bought-android-debug.apk`} download>
         <DownloadIcon /> 下载 Android 版
       </a>
       <p className={styles.note}>Android · 本地保存 · 无需登录</p>
@@ -42,7 +44,7 @@ export default function BrandPage() {
       <div><span>03</span><h2>买得准</h2><p>明确标记会不会复购，让每一次选择都有依据。</p></div>
     </section>
 
-    <footer className={styles.footer}><span>买过 · 你的私人购物记忆库</span><a href="/downloads/bought-android-debug.apk" download>下载 Android 版</a></footer>
+    <footer className={styles.footer}><span>买过 · 你的私人购物记忆库</span><a href={`${basePath}/downloads/bought-android-debug.apk`} download>下载 Android 版</a></footer>
   </main>;
 }
 
