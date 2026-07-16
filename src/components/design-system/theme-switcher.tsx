@@ -19,6 +19,15 @@ function applyTheme(theme: ThemeName): void {
   localStorage.setItem(storageKey, theme);
 }
 
+/** Mount once in the root layout so a saved theme survives refreshes on every route. */
+export function ThemeInitializer() {
+  useEffect(() => {
+    const saved = localStorage.getItem(storageKey);
+    if (saved === "paper" || saved === "ink" || saved === "terracotta") applyTheme(saved);
+  }, []);
+  return null;
+}
+
 export function ThemeSwitcher({ className }: { className?: string }) {
   const [selected, setSelected] = useState<ThemeName>(() => {
     if (typeof window === "undefined") return "terracotta";
