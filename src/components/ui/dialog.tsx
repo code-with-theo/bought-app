@@ -25,7 +25,7 @@ export function ConfirmDialog({ open, title, description, confirmLabel = "确认
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [isConfirming, onOpenChange, open]);
   if (!open) return null;
-  return <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#312b27]/35 p-4 sm:items-center" role="presentation" onMouseDown={() => !isConfirming && onOpenChange(false)}>
+  return <div className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/35 p-4 sm:items-center" role="presentation" onMouseDown={() => !isConfirming && onOpenChange(false)}>
     <section aria-labelledby="confirm-dialog-title" aria-describedby="confirm-dialog-description" aria-modal="true" role="dialog" className="w-full max-w-sm rounded-[var(--radius-lg)] bg-surface p-5 shadow-[var(--shadow-float)]" onMouseDown={(event) => event.stopPropagation()}>
       <h2 id="confirm-dialog-title" className="text-lg font-bold">{title}</h2>
       <p id="confirm-dialog-description" className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>

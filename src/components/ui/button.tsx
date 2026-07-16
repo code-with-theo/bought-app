@@ -9,10 +9,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variants: Record<ButtonVariant, string> = {
-  primary: "bg-primary text-primary-foreground shadow-[var(--shadow-soft)] hover:bg-[#ca5146] active:translate-y-px disabled:bg-[#e9b0a9]",
+  primary: "bg-primary text-primary-foreground shadow-[var(--shadow-soft)] hover:brightness-95 active:translate-y-px disabled:opacity-45",
   secondary: "bg-surface text-foreground shadow-[0_1px_0_rgb(71_48_35/6%)] ring-1 ring-border hover:bg-surface-muted active:translate-y-px disabled:bg-surface-muted",
-  ghost: "text-muted-foreground hover:bg-surface-muted hover:text-foreground active:bg-[#eee2d8]",
-  danger: "bg-danger text-white shadow-[var(--shadow-soft)] hover:bg-[#a8413e] active:translate-y-px disabled:bg-[#dfa3a0]",
+  ghost: "text-muted-foreground hover:bg-surface-muted hover:text-foreground active:bg-surface-muted",
+  danger: "bg-danger text-white shadow-[var(--shadow-soft)] hover:brightness-95 active:translate-y-px disabled:opacity-45",
 };
 
 const sizes = { default: "min-h-11 px-4 text-sm", small: "min-h-9 px-3 text-sm", icon: "size-11 p-0" };
