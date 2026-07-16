@@ -1,7 +1,7 @@
 import type { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { cn } from "./utils";
 
-const fieldClassName = "w-full rounded-[var(--radius-sm)] border bg-surface px-3.5 text-[15px] text-foreground placeholder:text-muted-foreground hover:border-muted-foreground focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/20 disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-muted-foreground";
+const fieldClassName = "w-full rounded-none border-x-0 border-t-0 border-b bg-transparent px-0 text-[15px] text-foreground placeholder:text-muted-foreground hover:border-muted-foreground focus:border-primary focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:bg-transparent disabled:text-muted-foreground";
 
 export function Input({ className, ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={cn(fieldClassName, "min-h-11", className)} {...props} />;

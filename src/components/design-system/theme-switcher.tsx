@@ -6,10 +6,10 @@ import { cn } from "@/components/ui/utils";
 export type ThemeName = "terracotta" | "paper" | "ink";
 
 const storageKey = "bought-theme";
-const themes: Array<{ value: ThemeName; title: string; description: string; swatches: [string, string, string] }> = [
-  { value: "terracotta", title: "雾瓷赤陶", description: "温暖、克制的生活感", swatches: ["#F5F4F0", "#FFFFFF", "#B94F3E"] },
-  { value: "paper", title: "冷调纸感", description: "安静、现代的收藏感", swatches: ["#F4F5F3", "#FCFCFA", "#285C50"] },
-  { value: "ink", title: "墨黑奶油", description: "鲜明、优雅的品牌感", swatches: ["#F8F1E8", "#FFFDF9", "#24211E"] },
+const themes: Array<{ value: ThemeName; title: string; description: string }> = [
+  { value: "terracotta", title: "雾瓷赤陶", description: "温暖、中性的纸面" },
+  { value: "paper", title: "冷调纸感", description: "清冷、安静的纸面" },
+  { value: "ink", title: "墨黑奶油", description: "柔和、深色的纸面" },
 ];
 
 function applyTheme(theme: ThemeName): void {
@@ -36,7 +36,7 @@ export function ThemeSwitcher({ className }: { className?: string }) {
   });
   useEffect(() => { applyTheme(selected); }, [selected]);
   const selectTheme = (theme: ThemeName) => { setSelected(theme); applyTheme(theme); };
-  return <section className={cn("rounded-[var(--radius-lg)] bg-surface p-4 shadow-[var(--shadow-soft)]", className)} aria-labelledby="theme-switcher-title"><h2 id="theme-switcher-title" className="text-base font-bold">外观主题</h2><p className="mt-1 text-sm text-muted-foreground">选择你喜欢的收藏夹配色</p><div className="mt-4 grid gap-2" role="radiogroup" aria-label="外观主题">
-    {themes.map((theme) => <button key={theme.value} type="button" role="radio" aria-checked={selected === theme.value} onClick={() => selectTheme(theme.value)} className={cn("flex min-h-16 items-center gap-3 rounded-[var(--radius-sm)] border p-3 text-left", selected === theme.value ? "border-primary bg-primary-soft" : "border-border hover:bg-surface-muted")}><span className="flex shrink-0 -space-x-1" aria-hidden="true">{theme.swatches.map((swatch) => <span key={swatch} className="size-6 rounded-full border-2 border-surface" style={{ backgroundColor: swatch }} />)}</span><span className="min-w-0 flex-1"><span className="block text-sm font-bold">{theme.title}</span><span className="mt-0.5 block text-xs text-muted-foreground">{theme.description}</span></span><span className={cn("flex size-5 shrink-0 items-center justify-center rounded-full border", selected === theme.value ? "border-primary bg-primary text-white" : "border-muted-foreground")} aria-hidden="true">{selected === theme.value ? "✓" : null}</span></button>)}
+  return <section className={cn("border-y border-border py-4", className)} aria-labelledby="theme-switcher-title"><h2 id="theme-switcher-title" className="text-base font-semibold">外观主题</h2><p className="mt-1 text-sm text-muted-foreground">选择纸张的色温与强调色</p><div className="mt-4 border-y border-border" role="radiogroup" aria-label="外观主题">
+    {themes.map((theme, index) => <button key={theme.value} type="button" role="radio" aria-checked={selected === theme.value} onClick={() => selectTheme(theme.value)} className={cn("flex min-h-14 w-full items-center gap-3 py-3 text-left", index > 0 && "border-t border-border", selected === theme.value ? "text-foreground" : "text-muted-foreground hover:text-foreground")}><span className={cn("size-2 shrink-0 rounded-full", selected === theme.value ? "bg-primary" : "bg-border")} aria-hidden="true" /><span className="min-w-0 flex-1"><span className="block text-sm font-medium">{theme.title}</span><span className="mt-0.5 block text-xs text-muted-foreground">{theme.description}</span></span><span className="text-xs" aria-hidden="true">{selected === theme.value ? "已选" : ""}</span></button>)}
   </div></section>;
 }

@@ -10,11 +10,11 @@ const items: Array<{ key: NavKey; href: string; label: string; icon: string }> =
 ];
 
 export function FloatingAddButton({ href = "/products/new", label = "记录商品", iconOnly = false, className }: { href?: string; label?: string; iconOnly?: boolean; className?: string }) {
-  return <Link href={href} className={cn("inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-white shadow-[var(--shadow-float)] hover:brightness-95 focus-visible:outline-primary active:translate-y-px", className)} aria-label={label}><span className="text-xl leading-none" aria-hidden="true">+</span>{iconOnly ? null : label}</Link>;
+  return <Link href={href} className={cn("inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-white hover:brightness-95 focus-visible:outline-primary active:translate-y-px", className)} aria-label={label}><span className="text-xl leading-none" aria-hidden="true">+</span>{iconOnly ? null : label}</Link>;
 }
 
 export function BottomNavigation({ active }: { active?: NavKey }) {
-  return <nav aria-label="主导航" className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface px-2"><div className="safe-bottom mx-auto grid h-18 max-w-md grid-cols-5 items-end"><NavItem item={items[0]} active={active === "home"}/><NavItem item={items[1]} active={active === "library"}/><div className="relative flex h-16 min-w-0 items-center justify-center"><FloatingAddButton label="记录商品" iconOnly className="absolute -top-5 flex size-14 min-h-14 justify-center p-0" /></div><NavItem item={items[2]} active={active === "repurchase"}/><NavItem item={items[3]} active={active === "me"}/></div></nav>;
+  return <nav aria-label="主导航" className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background px-2"><div className="safe-bottom mx-auto grid h-18 max-w-md grid-cols-5 items-end"><NavItem item={items[0]} active={active === "home"}/><NavItem item={items[1]} active={active === "library"}/><div className="relative flex h-16 min-w-0 items-center justify-center"><FloatingAddButton label="记录商品" iconOnly className="absolute -top-5 flex size-14 min-h-14 justify-center p-0" /></div><NavItem item={items[2]} active={active === "repurchase"}/><NavItem item={items[3]} active={active === "me"}/></div></nav>;
 }
 
 function NavItem({ item, active }: { item: (typeof items)[number]; active: boolean }) {
