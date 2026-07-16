@@ -5,17 +5,23 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:web": "next build",
+    "sync:android": "npm run build:web && npx cap sync android",
+    "android:debug": "npm run sync:android && powershell -ExecutionPolicy Bypass -File scripts/build-android-debug.ps1",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
   "dependencies": {
+    "@capacitor/android": "^7.6.8",
+    "@capacitor/core": "^7.6.8",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.6.8",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

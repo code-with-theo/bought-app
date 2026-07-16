@@ -1,4 +1,4 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { ProductForm } from "./product-form";
-export function ProductEditPage() { const { id } = useParams<{ id: string }>(); return <ProductForm productId={id} />; }
+export function ProductEditPage() { const searchParams = useSearchParams(); return <ProductForm productId={searchParams.get("id") ?? undefined} />; }

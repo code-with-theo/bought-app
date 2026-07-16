@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/design-system/app-shell";
 import { BottomNavigation } from "@/components/design-system/navigation";
 import { PageHeader, SectionHeader } from "@/components/design-system/page-header";
@@ -19,7 +19,7 @@ import type { ProductRecord, RepurchaseDecision } from "@/types/product";
 const tags = ["性价比高", "颜值高", "好用", "不耐用", "不舒服", "太贵", "容易坏", "会回购", "踩雷"];
 const categoryLabels = { food: "吃的", clothing: "穿的", beauty: "护肤美妆", household: "家居日用", digital: "数码电器", other: "其他" };
 export function ProductDetail() {
-  const { id } = useParams<{ id: string }>(); const router = useRouter(); const { showToast } = useToast(); const [product, setProduct] = useState<ProductRecord | null>(null); const [loading, setLoading] = useState(true); const [failed, setFailed] = useState(false); const [deleting, setDeleting] = useState(false);
+  const searchParams = useSearchParams(); const id = searchParams.get("id") ?? ""; const router = useRouter(); const { showToast } = useToast(); const [product, setProduct] = useState<ProductRecord | null>(null); const [loading, setLoading] = useState(true); const [failed, setFailed] = useState(false); const [deleting, setDeleting] = useState(false);
   const load = useCallback(async () => { setLoading(true); try { setProduct(await productRepository.getById(id)); setFailed(false); } catch { setFailed(true); } finally { setLoading(false); } }, [id]);
   useEffect(() => { const timer = window.setTimeout(() => void load(), 0); return () => window.clearTimeout(timer); }, [load]);
   const update = async (input: Partial<ProductRecord>) => { if (!product) return; const before = product; setProduct({ ...product, ...input }); try { const saved = await productRepository.update(product.id, input); setProduct(saved); showToast("已记下你的感受。 "); } catch { setProduct(before); showToast("这次没存上，再试一次。", "error"); } };
@@ -27,7 +27,7 @@ export function ProductDetail() {
   if (failed) return <AppShell><p className="py-20 text-center text-danger">这页暂时没打开。</p><Button onClick={load}>重新加载</Button></AppShell>;
   if (!product) return <AppShell><div className="py-20 text-center"><p className="text-lg font-bold">这条记录可能已经被删除了。</p><Link className="mt-4 inline-block text-primary" href="/library">返回物品库</Link></div></AppShell>;
   const info = [["品牌", product.brand], ["购买日期", product.purchaseDate], ["购买渠道", product.purchaseChannel], ["价格", product.price === null ? "" : `¥${product.price}`], ["当前状态", { unused: "还没开始用", using: "使用中", finished: "已经用完" }[product.usageStatus]]];
-  return <><AppShell><PageHeader eyebrow={categoryLabels[product.category]} title={product.name} action={<Link className="text-sm font-bold text-primary" href={`/products/${product.id}/edit`}>编辑</Link>} />
+  return <><AppShell><PageHeader eyebrow={categoryLabels[product.category]} title={product.name} action={<Link className="text-sm font-bold text-primary" href={`/product/edit?id=${encodeURIComponent(product.id)}`}>编辑</Link>} />
     <ProductImage priority image={product.image} name={product.name} category={product.category} className="mt-5 aspect-[4/3] w-full" />
     {product.rating === null && product.repurchaseDecision === "undecided" && !product.review ? <p className="mt-4 border-l-2 border-warning py-1 pl-3 text-sm text-muted-foreground">用过以后，回来留一句感受吧。</p> : null}
     <section className="mt-7"><SectionHeader title="下次还会买吗？" /><RepurchaseSelector className="mt-3" value={product.repurchaseDecision} onChange={(repurchaseDecision: RepurchaseDecision) => update({ repurchaseDecision })} /></section>

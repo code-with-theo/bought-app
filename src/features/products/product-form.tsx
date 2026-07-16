@@ -36,7 +36,7 @@ export function ProductForm({ productId }: { productId?: string }) {
     if (!fields.name.trim() || !fields.image) { setError(!fields.name.trim() ? "先把商品名称补上吧。" : "请先添加一张商品照片。"); return; }
     setSaving(true); setError(""); try { const input: CreateProductInput = { ...fields, name: fields.name.trim(), image: fields.image, price: fields.price ?? null, purchaseDate: fields.purchaseDate || null };
       const saved = productId ? await productRepository.update(productId, input) : await productRepository.create(input);
-      showToast(productId ? "已经改好了。" : "记好了，下次就不会忘。 "); router.push(`/products/${saved.id}`);
+      showToast(productId ? "已经改好了。" : "记好了，下次就不会忘。 "); router.push(`/product?id=${encodeURIComponent(saved.id)}`);
     } catch (reason) { setError(reason instanceof Error ? reason.message : "这次没存上，再试一次。"); } finally { setSaving(false); } };
   if (loading) return <AppShell><p className="py-20 text-center text-muted-foreground">正在翻找这条记录…</p></AppShell>;
   return <><AppShell><PageHeader eyebrow={productId ? "编辑记录" : "新的记忆"} title={productId ? "改改这条记录" : "记一件买过的"} description="先留下最重要的三项，其余以后再补。" />
