@@ -10,6 +10,7 @@
     "android:debug": "npm run sync:android && powershell -ExecutionPolicy Bypass -File scripts/build-android-debug.ps1",
     "api:dev": "wrangler dev --config worker/wrangler.jsonc",
     "api:deploy": "wrangler deploy --config worker/wrangler.jsonc",
+    "api:deploy:remote": "npm run api:db:migrate:remote && npm run api:deploy",
     "api:db:migrate:local": "wrangler d1 migrations apply bought --local --config worker/wrangler.jsonc",
     "api:db:migrate:remote": "wrangler d1 migrations apply bought --remote --config worker/wrangler.jsonc",
     "start": "next start",
