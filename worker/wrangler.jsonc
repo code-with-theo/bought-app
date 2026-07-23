@@ -3,6 +3,9 @@
   "name": "bought-api",
   "main": "src/index.ts",
   "compatibility_date": "2026-07-23",
+  "vars": {
+    "ALLOWED_ORIGINS": "https://bought-app.catzen.workers.dev,capacitor://localhost"
+  },
   "d1_databases": [
     {
       "binding": "DB",
