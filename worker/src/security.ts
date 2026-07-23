@@ -1,5 +1,8 @@
 const encoder = new TextEncoder();
-const iterations = 600_000;
+// Workers Free allows 10 ms CPU per request. A server-only 600k-round PBKDF2
+// cannot run reliably within that limit, so the stored verifier is also keyed
+// with the Worker-only SESSION_SECRET pepper.
+const iterations = 10_000;
 
 function bytesToBase64(bytes: Uint8Array): string {
   let binary = "";
@@ -24,14 +27,14 @@ export async function sha256(value: string): Promise<string> {
   return bytesToBase64(new Uint8Array(digest));
 }
 
-export async function hashPassword(password: string, salt = bytesToBase64(crypto.getRandomValues(new Uint8Array(16)))): Promise<{ hash: string; salt: string }> {
-  const material = await crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits"]);
+export async function hashPassword(password: string, pepper: string, salt = bytesToBase64(crypto.getRandomValues(new Uint8Array(16)))): Promise<{ hash: string; salt: string }> {
+  const material = await crypto.subtle.importKey("raw", encoder.encode(`${password}:${pepper}`), "PBKDF2", false, ["deriveBits"]);
   const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: base64ToBytes(salt), iterations }, material, 256);
   return { hash: bytesToBase64(new Uint8Array(bits)), salt };
 }
 
-export async function verifyPassword(password: string, salt: string, expectedHash: string): Promise<boolean> {
-  const { hash } = await hashPassword(password, salt);
+export async function verifyPassword(password: string, pepper: string, salt: string, expectedHash: string): Promise<boolean> {
+  const { hash } = await hashPassword(password, pepper, salt);
   const left = encoder.encode(hash);
   const right = encoder.encode(expectedHash);
   if (left.length !== right.length) return false;

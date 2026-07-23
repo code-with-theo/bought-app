@@ -197,7 +197,7 @@ async function serve(request: Request, env: Env): Promise<Response> {
       .first<{ id: string }>();
     if (existing) return error("该邮箱已注册，请直接登录。", 409);
     const user = { id: id(), email: userEmail };
-    const credentials = await hashPassword(userPassword);
+    const credentials = await hashPassword(userPassword, env.SESSION_SECRET);
     await env.DB.prepare(
       "INSERT INTO users (id, email, password_hash, password_salt, created_at) VALUES (?, ?, ?, ?, ?)",
     )
@@ -222,6 +222,7 @@ async function serve(request: Request, env: Env): Promise<Response> {
       !user ||
       !(await verifyPassword(
         userPassword,
+        env.SESSION_SECRET,
         user.password_salt,
         user.password_hash,
       ))
