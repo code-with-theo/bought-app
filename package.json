@@ -8,6 +8,10 @@
     "build:web": "next build",
     "sync:android": "npm run build:web && npx cap sync android",
     "android:debug": "npm run sync:android && powershell -ExecutionPolicy Bypass -File scripts/build-android-debug.ps1",
+    "api:dev": "wrangler dev --config worker/wrangler.jsonc",
+    "api:deploy": "wrangler deploy --config worker/wrangler.jsonc",
+    "api:db:migrate:local": "wrangler d1 migrations apply bought --local --config worker/wrangler.jsonc",
+    "api:db:migrate:remote": "wrangler d1 migrations apply bought --remote --config worker/wrangler.jsonc",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
@@ -30,6 +34,7 @@
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "wrangler": "^4.113.0"
   }
 }
