@@ -7,14 +7,8 @@
     {
       "binding": "DB",
       "database_name": "bought",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "f6e3d0ee-6659-4bee-9a75-1a456c2a6b96",
       "migrations_dir": "migrations"
-    }
-  ],
-  "r2_buckets": [
-    {
-      "binding": "IMAGES",
-      "bucket_name": "bought-images"
     }
   ]
 }

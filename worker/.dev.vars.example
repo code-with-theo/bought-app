@@ -1,3 +1,5 @@
 # Copy to worker/.dev.vars for local development. Do not commit worker/.dev.vars.
 # The local static site origin. Add only one exact origin, with no trailing slash.
 ALLOWED_ORIGINS=http://localhost:3000
+# Generate a long random value for every environment. Never commit a real value.
+SESSION_SECRET=replace-with-a-long-random-secret
