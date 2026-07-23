@@ -54,7 +54,7 @@ const error = (message: string, status: number) =>
 
 function cors(request: Request, env: Env): HeadersInit {
   const origin = request.headers.get("origin");
-  const allowedOrigins = env.ALLOWED_ORIGINS.split(",")
+  const allowedOrigins = (env.ALLOWED_ORIGINS ?? "").split(",")
     .map((value) => value.trim())
     .filter(Boolean);
   return origin && allowedOrigins.includes(origin)
